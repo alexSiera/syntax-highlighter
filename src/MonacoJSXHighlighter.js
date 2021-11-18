@@ -444,9 +444,9 @@ class MonacoJSXHighlighter {
    highlightOnDidChangeModelContent(
       debounceTime = 100,
       afterHighlight = ast => ast,
-      onHighlightError = error => console.error(""),
+      onHighlightError = error => console.error(),
       getAstPromise,
-      onParseAstError = error => console.log(""),
+      onParseAstError = error => console.log(),
    ) {
       getAstPromise = getAstPromise || this.getAstPromise;
       const highlightCallback = () => {
@@ -509,7 +509,7 @@ class MonacoJSXHighlighter {
    
    highlightCode(
       afterHighlight = ast => ast,
-      onError = error => console.error(""),
+      onError = error => {},
       getAstPromise,
       onJsParserErrors = error => error,
    ) {
@@ -520,7 +520,7 @@ class MonacoJSXHighlighter {
             .catch(onJsParserErrors)
       )
          .then(afterHighlight)
-         .catch(onError);
+         .catch();
    }
    
    highlight(ast, jsxTraverseAst = _jsxTraverseAst) {

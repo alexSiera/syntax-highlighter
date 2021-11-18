@@ -370,7 +370,7 @@ class MonacoJSXHighlighter {
       resolve(this.ast);
     });
   }
-  highlightOnDidChangeModelContent(debounceTime = 100, afterHighlight = ast => ast, onHighlightError = error => console.error(""), getAstPromise, onParseAstError = error => console.log("")) {
+  highlightOnDidChangeModelContent(debounceTime = 100, afterHighlight = ast => ast, onHighlightError = error => console.error(), getAstPromise, onParseAstError = error => console.log()) {
     getAstPromise = getAstPromise || this.getAstPromise;
     const highlightCallback = () => {
       this.highlightCode(afterHighlight, onHighlightError, getAstPromise, onParseAstError);
@@ -408,9 +408,9 @@ class MonacoJSXHighlighter {
     });
     return onDispose;
   }
-  highlightCode(afterHighlight = ast => ast, onError = error => console.error(""), getAstPromise, onJsParserErrors = error => error) {
+  highlightCode(afterHighlight = ast => ast, onError = error => {}, getAstPromise, onJsParserErrors = error => error) {
     getAstPromise = getAstPromise || this.getAstPromise;
-    return getAstPromise().then(ast => this.highlight(ast)).catch(onJsParserErrors).then(afterHighlight).catch(onError);
+    return getAstPromise().then(ast => this.highlight(ast)).catch(onJsParserErrors).then(afterHighlight).catch();
   }
   highlight(ast, jsxTraverseAst = _jsxTraverseAst) {
     return new Promise(resolve => {
